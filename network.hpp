@@ -14,6 +14,7 @@ class Network : public MooreMachine {
 		XOR xor1;
 		XOR xor2;
 		Memory m;
+		int tick;
 
 	public:
 		Network();
