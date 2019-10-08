@@ -5,7 +5,7 @@
 class MooreMachine{
 	public:
 		virtual bool lambda() = 0;
-		virtual void delta(void *, ...) = 0;
+		virtual void delta(int, ...) = 0;
 };
 
 #endif

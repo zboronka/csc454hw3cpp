@@ -2,23 +2,32 @@
 
 #include "xor.hpp"
 #include "memory.hpp"
+#include "network.hpp"
 
 using namespace std;
 
 int main() {
-	XOR * x1 = new XOR();
-	Memory * m = new Memory();
-
-	cout << "First x1=" << x1->lambda() << endl;
-	cout << "First m=" << m->lambda() << endl;
+	Network * n = new Network();
+	bool show = false;
 
 	string command;
 	for(cin >> command; command != "exit"; cin >> command) {
-		x1->delta(0, command[0] == '1', command[1] == '1');
-		m->delta(0, command[2] == '1');
-		cout << "X1=" << x1->lambda() << endl << "M=" << m->lambda() << endl;
+		if(command.compare("verbose") == 0) {
+			show = true;
+		}
+		else if(command.compare("normal") == 0) {
+			show = false;
+		}
+		else {
+			cout << n->lambda() << endl;
+			if(show) {
+				n->delta(3, command[0] == '1', command[1] == '1');
+			}
+			else {
+				n->delta(0, command[0] == '1', command[1] == '1');
+			}
+		}
 	}
 
-	delete(x1);
-	delete(m);
+	delete(n);
 }

@@ -1,0 +1,34 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/3fdf28bc/
+CC	Makefile	/^CC=g++$/;"	m
+LIBS	Makefile	/^LIBS=$/;"	m
+MEMORY_HPP	memory.hpp	/^#define MEMORY_HPP$/;"	d
+MOOREMACHINE_HPP	mooremachine.hpp	/^#define MOOREMACHINE_HPP$/;"	d
+Memory	memory.hpp	/^class Memory : public MooreMachine {$/;"	c
+MooreMachine	mooremachine.hpp	/^class MooreMachine{$/;"	c
+NETWORK_HPP	network.hpp	/^#define NETWORK_HPP$/;"	d
+Network	network.cpp	/^Network::Network() {$/;"	f	class:Network
+Network	network.hpp	/^class Network : public MooreMachine {$/;"	c
+SOURCE	Makefile	/^SOURCE=*.cpp$/;"	m
+TARGET	Makefile	/^TARGET=-o main$/;"	m
+XOR	xor.hpp	/^class XOR : public MooreMachine {$/;"	c
+XOR_HPP	xor.hpp	/^#define XOR_HPP$/;"	d
+all	Makefile	/^all:$/;"	t
+delta	memory.cpp	/^void Memory::delta(int start, ...) {$/;"	f	class:Memory	typeref:typename:void
+delta	network.cpp	/^void Network::delta(int start,...) {$/;"	f	class:Network	typeref:typename:void
+delta	xor.cpp	/^void XOR::delta(int start, ...) {$/;"	f	class:XOR	typeref:typename:void
+lambda	memory.hpp	/^		bool lambda() { return q1; }$/;"	f	class:Memory	typeref:typename:bool
+lambda	network.cpp	/^bool Network::lambda() {$/;"	f	class:Network	typeref:typename:bool
+lambda	xor.hpp	/^		bool lambda() { return state; }$/;"	f	class:XOR	typeref:typename:bool
+m	network.hpp	/^		Memory m;$/;"	m	class:Network	typeref:typename:Memory
+main	hw3.cpp	/^int main() {$/;"	f	typeref:typename:int
+q1	memory.hpp	/^		bool q1 = false;$/;"	m	class:Memory	typeref:typename:bool
+q2	memory.hpp	/^		bool q2 = false;$/;"	m	class:Memory	typeref:typename:bool
+state	xor.hpp	/^		bool state = false;$/;"	m	class:XOR	typeref:typename:bool
+xor1	network.hpp	/^		XOR xor1;$/;"	m	class:Network	typeref:typename:XOR
+xor2	network.hpp	/^		XOR xor2;$/;"	m	class:Network	typeref:typename:XOR

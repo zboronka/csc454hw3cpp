@@ -1,6 +1,6 @@
 #include "xor.hpp"
 
-void XOR::delta(void * start, ...) {
+void XOR::delta(int start, ...) {
 	va_list x;
 	va_start(x, start);
 

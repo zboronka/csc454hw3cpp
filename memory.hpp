@@ -10,7 +10,7 @@ class Memory : public MooreMachine {
 
 	public:
 		bool lambda() { return q1; }
-		void delta(void *, ...);
+		void delta(int, ...);
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "memory.hpp"
 
-void Memory::delta(void * start, ...) {
+void Memory::delta(int start, ...) {
 	va_list x;
 	va_start(x, start);
 

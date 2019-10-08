@@ -9,7 +9,7 @@ class XOR : public MooreMachine {
 
 	public:
 		bool lambda() { return state; }
-		void delta(void *, ...);
+		void delta(int, ...);
 };
 
 #endif
