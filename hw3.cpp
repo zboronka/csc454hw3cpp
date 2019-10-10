@@ -1,14 +1,21 @@
-#include<iostream>
+#include <iostream>
+#include <vector>
 
 #include "xor.hpp"
 #include "memory.hpp"
 #include "network.hpp"
+#include "couple.hpp"
 
 using namespace std;
 
 int main() {
+	vector<bool>* b = new vector<bool>();
+	Couple c = Couple(new XOR(), b);
+	c.pipe();
 	Network * n = new Network();
 	bool show = false;
+	int x = n->addMM(new XOR());
+	int y = n->addMM(new XOR());
 
 	string command;
 	for(cin >> command; command != "exit"; cin >> command) {

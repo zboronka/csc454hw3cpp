@@ -6,6 +6,12 @@ Network::Network() {
 	m = Memory();
 }
 
+Network::~Network() {
+	for(auto m = machines.begin(); m != machines.end(); m++) {
+		delete(*m);
+	}
+}
+
 bool Network::lambda() {
 	return(xor2.lambda());
 }
@@ -53,4 +59,9 @@ void Network::delta(int start,...) {
 	}
 	
 	va_end(x);
+}
+
+int Network::addMM(MooreMachine * machine) {
+	machines.push_back(machine);
+	return(machines.size()-1);
 }
