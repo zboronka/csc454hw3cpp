@@ -1,45 +1,56 @@
-#include<iostream>
+#include <iostream>
+#include <vector>
 
 #include "xor.hpp"
 #include "memory.hpp"
 #include "network.hpp"
+#include "couple.hpp"
+
+#define PROMPT "\u001b[32mnet_in# \u001b[39;49m"
 
 using namespace std;
 
 int main() {
-	Network * n = new Network();
-	bool show = false;
+	string command = "";
 	bool step = false;
+	vector<bool>* input = new vector<bool>();
+	
+	XOR* xor1 = new XOR();
+	XOR* xor2 = new XOR();
+	Memory* m = new Memory();
 
-	string command;
+	Couple* one = new Couple();
+	one->addInput(xor1);
+	one->addInput(m);
+	one->addOutput(xor2);
+
+	Couple* two = new Couple();
+	two->addInput(xor2);
+	two->addOutput(m);
+
+	Network* net = new Network(xor1, xor2, 3);
+	net->addCouple(one);
+	net->addCouple(two);
+
+	cout << PROMPT;
 	for(cin >> command; command != "exit"; cin >> command) {
-		if(command.compare("verbose") == 0) {
-			show = true;
+		input->clear();
+		if(command == "verbose") {
+			net->verbose();
 		}
-		else if(command.compare("normal") == 0) {
-			show = false;
-		}
-		else if(command.compare("step") == 0) {
-			step = true;
-		}
-		else if(command.compare("nostep") == 0) {
-			step = false;
+		else if(command == "step") {
+			int t = step ? 3 : 1;
+			net->step(t);
+			step != step;
 		}
 		else {
-			cout << "Network output= " << n->lambda() << endl;
-			if(show && step) {
-				n->delta(4, command[0] == '1', command[1] == '1', show, step);
-			}
-			else if(show) {
-				n->delta(3, command[0] == '1', command[1] == '1', show);
-			}
-			else {
-				n->delta(0, command[0] == '1', command[1] == '1');
-			}
+			input->push_back(command[0] == '1');
+			input->push_back(command[1] == '1');
+
+			printf("Network lambda %s\n", net->lambda() ? "true" : "false");
+			net->delta(input);
 		}
 
-		cout << endl;
+		cout << PROMPT;
 	}
-
-	delete(n);
 }

@@ -10,7 +10,7 @@ class Memory : public MooreMachine {
 
 	public:
 		bool lambda() { return q1; }
-		void delta(int, ...);
+		void delta(vector<bool>* in) { q1 = q2; q2 = (*in)[0]; }
 };
 
 #endif

@@ -1,11 +1,14 @@
 #ifndef MOOREMACHINE_HPP
 #define MOOREMACHINE_HPP
 
-#include<cstdarg>
-class MooreMachine{
+#include <vector>
+
+using namespace std;
+
+class MooreMachine {
 	public:
 		virtual bool lambda() = 0;
-		virtual void delta(int, ...) = 0;
+		virtual void delta(vector<bool>*) = 0;
 };
 
 #endif

@@ -1,61 +1,64 @@
 #include "network.hpp"
 
-Network::Network() {
-	xor1 = XOR();
-	xor2 = XOR();
-	m = Memory();
-}
+void Network::delta(vector<bool>* in) {
+	for(int tick = 0; tick < ticks; tick++) {
+		if(verb) {
+			char buffer[50];
+			sprintf(buffer, "Tick %d", currentTick);
+			string tickCounter = string(buffer);
+			int left = (LINEWIDTH-tickCounter.length())/2;
+			int right = (LINEWIDTH-tickCounter.length())%2 == 0 ? left : left + 1;
 
-bool Network::lambda() {
-	return(xor2.lambda());
-}
-
-void Network::delta(int start,...) {
-	va_list x;
-	va_start(x, start);
-
-	bool x1 = va_arg(x, int);
-	bool x2 = va_arg(x, int);
-	bool verbose = start > 2;
-	int step = start > 3 ? 1 : 3;
-
-	for(int i = 0; i < step; i++) {
-		if(verbose) {
-			cout << "=============TICK " << tick << "=============" << endl;
-		}
-
-		bool l_xor1 = xor1.lambda();
-		if(verbose) {
-			cout << "XOR1 lambda=        {" << l_xor1 << "}" << endl;
-		}
-
-		bool l_xor2 = xor2.lambda();
-		if(verbose) {
-			cout << "XOR2 lambda=        {" << l_xor2 << "}" << endl;
-		}
-
-		bool l_m = m.lambda();
-		if(verbose) {
-			cout << "M lambda=           {" << l_m << "}" << endl;
-		}
-
-		xor1.delta(0, x1, x2);
-		if(verbose) {
-			cout << "XOR1 delta, state=  {" << (x1 ^ x2) << "}" << endl;
-		}
-
-		xor2.delta(0, l_xor1, l_m);
-		if(verbose) {
-			cout << "XOR2 delta, state=  {" << (l_xor1 ^ l_m) << "}" << endl;
-		}
-
-		m.delta(0, l_xor2);
-		if(verbose) {
-			cout << "M delta, state=     {q1=" << l_m << ", q2=" << l_xor2 << "}" << endl;
+			cout << endl << BOXC << "╔" << line("═", left) << TICKC << tickCounter << BOXC << line("═", right) << "╗" << endl;
 		}
 		
-		tick = (tick + 1) % 3;
+		for(auto c = couples->begin(); c != couples->end(); c++) {
+			(*c)->pipe();
+			if(verb) {
+				coupleOutput->insert(coupleOutput->end(), (*c)->getOutput()->begin(), (*c)->getOutput()->end());
+			}
+		}
+
+		input->delta(in);
+		if(verb) {
+			char buffer [50];
+			sprintf(buffer, "%p ran delta", input);
+			coupleOutput->push_back(string(buffer));
+		}
+		
+		for(auto c = couples->begin(); c != couples->end(); c++) {
+			(*c)->deltas();
+			if(verb) {
+				coupleOutput->insert(coupleOutput->end(), (*c)->getOutput()->begin(), (*c)->getOutput()->end());
+			}
+		}
+
+		if(verb) {
+			for(auto s = coupleOutput->begin(); s != coupleOutput->end(); s++) {
+				int right = LINEWIDTH-(*s).length();
+				cout << "║" << RESETC << (*s) << line(" ", right) << BOXC << "║" << endl;
+			}
+
+			cout << "╚" << line("═", LINEWIDTH) << "╝" << RESETC << endl;
+		}
+
+		coupleOutput->clear();
+		currentTick++;
+	}
+}
+
+void Network::verbose() {
+	verb = !verb;
+	for(auto c = couples->begin(); c != couples->end(); c++) {
+		(*c)->verbose();
+	}
+}
+
+string Network::line(string c, int num) {
+	string ret = "";
+	for(int i = 0; i < num; i++) {
+		ret += c;
 	}
 	
-	va_end(x);
+	return ret;
 }
