@@ -1,67 +1,64 @@
 #include "network.hpp"
 
-Network::Network() {
-	xor1 = XOR();
-	xor2 = XOR();
-	m = Memory();
-}
+void Network::delta(vector<bool>* in) {
+	for(int tick = 0; tick < ticks; tick++) {
+		if(verb) {
+			char buffer[50];
+			sprintf(buffer, "Tick %d", currentTick);
+			string tickCounter = string(buffer);
+			int left = (LINEWIDTH-tickCounter.length())/2;
+			int right = (LINEWIDTH-tickCounter.length())%2 == 0 ? left : left + 1;
 
-Network::~Network() {
-	for(auto m = machines.begin(); m != machines.end(); m++) {
-		delete(*m);
+			cout << endl << BOXC << "╔" << line("═", left) << TICKC << tickCounter << BOXC << line("═", right) << "╗" << endl;
+		}
+		
+		for(auto c = couples->begin(); c != couples->end(); c++) {
+			(*c)->pipe();
+			if(verb) {
+				coupleOutput->insert(coupleOutput->end(), (*c)->getOutput()->begin(), (*c)->getOutput()->end());
+			}
+		}
+
+		input->delta(in);
+		if(verb) {
+			char buffer [50];
+			sprintf(buffer, "%p ran delta", input);
+			coupleOutput->push_back(string(buffer));
+		}
+		
+		for(auto c = couples->begin(); c != couples->end(); c++) {
+			(*c)->deltas();
+			if(verb) {
+				coupleOutput->insert(coupleOutput->end(), (*c)->getOutput()->begin(), (*c)->getOutput()->end());
+			}
+		}
+
+		if(verb) {
+			for(auto s = coupleOutput->begin(); s != coupleOutput->end(); s++) {
+				int right = LINEWIDTH-(*s).length();
+				cout << "║" << RESETC << (*s) << line(" ", right) << BOXC << "║" << endl;
+			}
+
+			cout << "╚" << line("═", LINEWIDTH) << "╝" << RESETC << endl;
+		}
+
+		coupleOutput->clear();
+		currentTick++;
 	}
 }
 
-bool Network::lambda() {
-	return(xor2.lambda());
+void Network::verbose() {
+	verb = !verb;
+	for(auto c = couples->begin(); c != couples->end(); c++) {
+		(*c)->verbose();
+	}
 }
 
-void Network::delta(int start,...) {
-	va_list x;
-	va_start(x, start);
-
-	bool x1 = va_arg(x, int);
-	bool x2 = va_arg(x, int);
-
-	for(int i = 0; i < 3; i++) {
-		if(start > 2) {
-			cout << "=============TICK " << i << "=============" << endl;
-		}
-		bool l_xor1 = xor1.lambda();
-		if(start > 2) {
-			cout << "XOR1 lambda=        {" << l_xor1 << "}" << endl;
-		}
-
-		bool l_xor2 = xor2.lambda();
-		if(start > 2) {
-			cout << "XOR2 lambda=        {" << l_xor2 << "}" << endl;
-		}
-
-		bool l_m = m.lambda();
-		if(start > 2) {
-			cout << "M lambda=           {" << l_m << "}" << endl;
-		}
-
-		xor1.delta(0, x1, x2);
-		if(start > 2) {
-			cout << "XOR1 delta, state=  {" << (x1 ^ x2) << "}" << endl;
-		}
-
-		xor2.delta(0, l_xor1, l_m);
-		if(start > 2) {
-			cout << "XOR2 delta, state=  {" << (l_xor1 ^ l_m) << "}" << endl;
-		}
-
-		m.delta(0, l_xor2);
-		if(start > 2) {
-			cout << "M delta, state=     {q1=" << l_m << ", q2=" << l_xor2 << "}" << endl;
-		}
+string Network::line(string c, int num) {
+	string ret = "";
+	for(int i = 0; i < num; i++) {
+		ret += c;
 	}
 	
-	va_end(x);
-}
-
-int Network::addMM(MooreMachine * machine) {
-	machines.push_back(machine);
-	return(machines.size()-1);
+	return ret;
 }

@@ -5,30 +5,57 @@
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	0.0.0	/3fdf28bc/
+BOXC	network.hpp	/^#define BOXC /;"	d
 CC	Makefile	/^CC=g++$/;"	m
+COUPLE_HPP	couple.hpp	/^#define COUPLE_HPP$/;"	d
+Couple	couple.hpp	/^class Couple {$/;"	c
 LIBS	Makefile	/^LIBS=$/;"	m
+LINEWIDTH	network.hpp	/^#define LINEWIDTH /;"	d
 MEMORY_HPP	memory.hpp	/^#define MEMORY_HPP$/;"	d
 MOOREMACHINE_HPP	mooremachine.hpp	/^#define MOOREMACHINE_HPP$/;"	d
 Memory	memory.hpp	/^class Memory : public MooreMachine {$/;"	c
-MooreMachine	mooremachine.hpp	/^class MooreMachine{$/;"	c
+MooreMachine	mooremachine.hpp	/^class MooreMachine {$/;"	c
 NETWORK_HPP	network.hpp	/^#define NETWORK_HPP$/;"	d
-Network	network.cpp	/^Network::Network() {$/;"	f	class:Network
+Network	network.hpp	/^		Network(MooreMachine* in, MooreMachine* out, int t) { input = in; output = out, ticks = t; }$/;"	f	class:Network
 Network	network.hpp	/^class Network : public MooreMachine {$/;"	c
+PROMPT	hw3.cpp	/^#define PROMPT /;"	d	file:
+RESETC	network.hpp	/^#define RESETC /;"	d
 SOURCE	Makefile	/^SOURCE=*.cpp$/;"	m
 TARGET	Makefile	/^TARGET=-o main$/;"	m
+TICKC	network.hpp	/^#define TICKC /;"	d
 XOR	xor.hpp	/^class XOR : public MooreMachine {$/;"	c
 XOR_HPP	xor.hpp	/^#define XOR_HPP$/;"	d
+addCouple	network.hpp	/^		void addCouple(Couple* couple) { couples->push_back(couple); }$/;"	f	class:Network	typeref:typename:void
+addInput	couple.hpp	/^		void addInput(MooreMachine* in) { inputs->push_back(in); }$/;"	f	class:Couple	typeref:typename:void
+addOutput	couple.hpp	/^		void addOutput(MooreMachine* out) { outputs->push_back(out); }$/;"	f	class:Couple	typeref:typename:void
 all	Makefile	/^all:$/;"	t
-delta	memory.cpp	/^void Memory::delta(int start, ...) {$/;"	f	class:Memory	typeref:typename:void
-delta	network.cpp	/^void Network::delta(int start,...) {$/;"	f	class:Network	typeref:typename:void
-delta	xor.cpp	/^void XOR::delta(int start, ...) {$/;"	f	class:XOR	typeref:typename:void
+coupleOutput	network.hpp	/^		vector<string>* coupleOutput = new vector<string>();$/;"	m	class:Network	typeref:typename:vector<string> *
+couples	network.hpp	/^		vector<Couple*>* couples = new vector<Couple*>();$/;"	m	class:Network	typeref:typename:vector<Couple * > *
+currentTick	network.hpp	/^		int currentTick = 0;$/;"	m	class:Network	typeref:typename:int
+delta	memory.hpp	/^		void delta(vector<bool>* in) { q1 = q2; q2 = (*in)[0]; }$/;"	f	class:Memory	typeref:typename:void
+delta	network.cpp	/^void Network::delta(vector<bool>* in) {$/;"	f	class:Network	typeref:typename:void
+delta	xor.hpp	/^		void delta(vector<bool>* in) { state = (*in)[0] ^ (*in)[1]; }$/;"	f	class:XOR	typeref:typename:void
+deltas	couple.cpp	/^void Couple::deltas() {$/;"	f	class:Couple	typeref:typename:void
+get	couple.hpp	/^		vector<bool>* get() { return output; }$/;"	f	class:Couple	typeref:typename:vector<bool> *
+getOutput	couple.hpp	/^		vector<string>* getOutput() { return output_string; }$/;"	f	class:Couple	typeref:typename:vector<string> *
+input	network.hpp	/^		MooreMachine* input;$/;"	m	class:Network	typeref:typename:MooreMachine *
+inputs	couple.hpp	/^		vector<MooreMachine*>* inputs = new vector<MooreMachine*>;$/;"	m	class:Couple	typeref:typename:vector<MooreMachine * > *
 lambda	memory.hpp	/^		bool lambda() { return q1; }$/;"	f	class:Memory	typeref:typename:bool
-lambda	network.cpp	/^bool Network::lambda() {$/;"	f	class:Network	typeref:typename:bool
+lambda	network.hpp	/^		bool lambda() { return output->lambda(); }$/;"	f	class:Network	typeref:typename:bool
 lambda	xor.hpp	/^		bool lambda() { return state; }$/;"	f	class:XOR	typeref:typename:bool
-m	network.hpp	/^		Memory m;$/;"	m	class:Network	typeref:typename:Memory
+line	network.cpp	/^string Network::line(string c, int num) {$/;"	f	class:Network	typeref:typename:string
 main	hw3.cpp	/^int main() {$/;"	f	typeref:typename:int
+output	couple.hpp	/^		vector<bool>* output = new vector<bool>();$/;"	m	class:Couple	typeref:typename:vector<bool> *
+output	network.hpp	/^		MooreMachine* output;$/;"	m	class:Network	typeref:typename:MooreMachine *
+output_string	couple.hpp	/^		vector<string>* output_string = new vector<string>();$/;"	m	class:Couple	typeref:typename:vector<string> *
+outputs	couple.hpp	/^		vector<MooreMachine*>* outputs = new vector<MooreMachine*>;$/;"	m	class:Couple	typeref:typename:vector<MooreMachine * > *
+pipe	couple.cpp	/^void Couple::pipe() {$/;"	f	class:Couple	typeref:typename:void
 q1	memory.hpp	/^		bool q1 = false;$/;"	m	class:Memory	typeref:typename:bool
 q2	memory.hpp	/^		bool q2 = false;$/;"	m	class:Memory	typeref:typename:bool
 state	xor.hpp	/^		bool state = false;$/;"	m	class:XOR	typeref:typename:bool
-xor1	network.hpp	/^		XOR xor1;$/;"	m	class:Network	typeref:typename:XOR
-xor2	network.hpp	/^		XOR xor2;$/;"	m	class:Network	typeref:typename:XOR
+step	network.hpp	/^		void step(int t) { ticks = t; }$/;"	f	class:Network	typeref:typename:void
+ticks	network.hpp	/^		int ticks;$/;"	m	class:Network	typeref:typename:int
+verb	couple.hpp	/^		bool verb = false;$/;"	m	class:Couple	typeref:typename:bool
+verb	network.hpp	/^		bool verb = false;$/;"	m	class:Network	typeref:typename:bool
+verbose	couple.hpp	/^		void verbose() { verb != verb; }$/;"	f	class:Couple	typeref:typename:void
+verbose	network.cpp	/^void Network::verbose() {$/;"	f	class:Network	typeref:typename:void
