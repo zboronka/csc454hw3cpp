@@ -18,6 +18,7 @@ class Couple {
 		bool verb = false;
 
 	public:
+		~Couple() { delete inputs; delete outputs; delete output; delete output_string; }
 		void pipe();
 		void deltas();
 

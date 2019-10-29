@@ -53,4 +53,12 @@ int main() {
 
 		cout << PROMPT;
 	}
+
+	delete input;
+	delete xor1;
+	delete xor2;
+	delete m;
+	delete one;
+	delete two;
+	delete net;
 }

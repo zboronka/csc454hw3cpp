@@ -32,6 +32,7 @@ class Network : public MooreMachine {
 
 	public:
 		Network(MooreMachine* in, MooreMachine* out, int t) { input = in; output = out, ticks = t; }
+		~Network() { delete couples; delete coupleOutput; }
 
 		bool lambda() { return output->lambda(); }
 		void delta(vector<bool>* in);
